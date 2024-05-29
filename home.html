@@ -13,6 +13,7 @@
 
   <script>
     async function predict() {
+      window.print("prediction");
       const input = document.getElementById('input').value.split(',').map(Number);
       const response = await fetch('http://localhost:3000/predict', {
         method: 'POST',
