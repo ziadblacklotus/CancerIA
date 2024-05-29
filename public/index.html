@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Tester</title>
+</head>
+<body>
+  <h1>Testez le Modèle</h1>
+  <input id="radius_mean" type="number" placeholder="radius_mean">
+  <input id="texture_mean" type="number" placeholder="texture_mean">
+  <input id="perimeter_mean" type="number" placeholder="perimeter_mean">
+  <input id="area_mean" type="number" placeholder="area_mean">
+  <input id="smoothness_mean" type="number" placeholder="smoothness_mean">
+  <input id="compactness_mean" type="number" placeholder="compactness_mean">
+  <input id="concavity_mean" type="number" placeholder="concavity_mean">
+  <input id="concave_points_mean" type="number" placeholder="concave_points_mean">
+  <input id="symmetry_mean" type="number" placeholder="symmetry_mean">
+  <input id="fractal_dimension_mean" type="number" placeholder="fractal_dimension_mean">
+  <input id="radius_se" type="number" placeholder="radius_se">
+  <input id="texture_se" type="number" placeholder="texture_se">
+  <input id="perimeter_se" type="number" placeholder="perimeter_se">
+  <input id="area_se" type="number" placeholder="area_se">
+  <input id="smoothness_se" type="number" placeholder="smoothness_se">
+  <input id="compactness_se" type="number" placeholder="compactness_se">
+  <input id="concavity_se" type="number" placeholder="concavity_se">
+  <input id="concave_points_se" type="number" placeholder="concave_points_se">
+  <input id="symmetry_se" type="number" placeholder="symmetry_se">
+  <input id="fractal_dimension_se" type="number" placeholder="fractal_dimension_se">
+  <input id="radius_worst" type="number" placeholder="radius_worst">
+  <input id="texture_worst" type="number" placeholder="texture_worst">
+  <input id="perimeter_worst" type="number" placeholder="perimeter_worst">
+  <input id="area_worst" type="number" placeholder="area_worst">
+  <input id="smoothness_worst" type="number" placeholder="smoothness_worst">
+  <input id="compactness_worst" type="number" placeholder="compactness_worst">
+  <input id="concavity_worst" type="number" placeholder="concavity_worst">
+  <input id="concave_points_worst" type="number" placeholder="concave_points_worst">
+  <input id="symmetry_worst" type="number" placeholder="symmetry_worst">
+  <input id="fractal_dimension_worst" type="number" placeholder="fractal_dimension_worst">
+  <button onclick="predict()">Prédire</button>
+  <div id="result"></div>
+
+  <script>
+    async function predict() {
+      const inputIds = [
+        'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean',
+        'compactness_mean', 'concavity_mean', 'concave_points_mean', 'symmetry_mean',
+        'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se',
+        'smoothness_se', 'compactness_se', 'concavity_se', 'concave_points_se', 'symmetry_se',
+        'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst',
+        'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave_points_worst',
+        'symmetry_worst', 'fractal_dimension_worst'
+      ];
+
+      // Récupérer les valeurs de tous les champs d'entrée
+      const inputValues = inputIds.map(id => parseFloat(document.getElementById(id).value) || 0);
+
+      const response = await fetch('http://localhost:3000/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ input: [inputValues] })
+      });
+      const result = await response.json();
+      let rs = Math.round(result)
+      if (rs == 1)
+        document.getElementById('result').innerText = 'malignant tumor risk of cancer, need to operate'
+      else
+        document.getElementById('result').innerText = 'benign tumor low risk of cancer'
+
+    }
+  </script>
+</body>
+</html>
