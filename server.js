@@ -11,6 +11,7 @@ let model;
 app.use(express.json());
 
 app.post('/predict', async (req, res) => {
+  window.print("prediction");
   const input = tf.tensor(req.body.input);
   const prediction = model.predict(input);
   prediction.array().then(array => {
