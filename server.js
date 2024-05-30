@@ -20,6 +20,9 @@ app.post('/predict', async (req, res) => {
   });
 });
 
+app.post('/test', (req, res) => {
+  console.log('testttttttt\n');
+})
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
